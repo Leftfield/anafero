@@ -1,6 +1,11 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.utils import timezone
+try:
+    from django.utils import timezone
+    now_func = timezone.now
+except ImportError:
+    import datetime
+    now_func = datetime.now
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -24,7 +29,7 @@ class Referral(models.Model):
         fk_field="target_object_id"
     )
     
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=now_func)
     
     def __unicode__(self):
         if self.user:
@@ -145,4 +150,4 @@ class ReferralResponse(models.Model):
         fk_field="target_object_id"
     )
     
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=now_func)
