@@ -4,7 +4,7 @@ try:
     from django.utils import timezone
     now_func = timezone.now
 except ImportError:
-    import datetime
+    from datetime import datetime
     now_func = datetime.now
 
 from django.contrib.auth.models import User
